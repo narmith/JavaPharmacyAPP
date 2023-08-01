@@ -1,4 +1,5 @@
 package views;
+import controllers.CategoriesController;
 import controllers.CustomersController;
 import controllers.EmployeesController;
 import controllers.SettingsController;
@@ -7,6 +8,8 @@ import models.Customers;
 import models.CustomersDao;
 import models.Employees;
 import models.EmployeesDao;
+import models.Categories;
+import models.CategoriesDao;
 import models.Suppliers;
 import models.SuppliersDao;
 import static models.EmployeesDao.full_name_user;
@@ -21,6 +24,8 @@ public class SystemView extends javax.swing.JFrame {
     CustomersDao customerDao = new CustomersDao();
     Suppliers supplier = new Suppliers();
     SuppliersDao supplierDao = new SuppliersDao();
+    Categories category = new Categories();
+    CategoriesDao categoriesDao = new CategoriesDao();
     
     public SystemView() {
         initComponents();
@@ -32,17 +37,21 @@ public class SystemView extends javax.swing.JFrame {
         SettingsController setting = new SettingsController(this);
         
         //Employee controller
-        EmployeesController employee_account = new EmployeesController(employee,employeesDao,this);
-        employee_account.listAllEmployees();
-        employee_account.cleanFields();
+        EmployeesController employee_user = new EmployeesController(employee,employeesDao,this);
+        employee_user.listAllEmployees();
+        employee_user.cleanFields();
         
         CustomersController customer_account = new CustomersController(customer,customerDao,this);
         customer_account.listAllCustomers();
         customer_account.cleanFields();
         
-        SuppliersController supplier_account = new SuppliersController(supplier,supplierDao,this);
-        supplier_account.listAllSuppliers();
-        supplier_account.cleanFields();
+        SuppliersController supplier_info = new SuppliersController(supplier,supplierDao,this);
+        supplier_info.listAllSuppliers();
+        supplier_info.cleanFields();
+        
+        CategoriesController category_section = new CategoriesController(category,categoriesDao,this);
+        category_section.listAllCategories();
+        category_section.cleanFields();
         
         this.repaint();
     }
@@ -444,8 +453,6 @@ public class SystemView extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Farmacia Vida Natural");
         jPanelUp.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 340, 100));
-
-        btn_employee_picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/EmotionsMSN/www.MessenTools.com-Anime-Consejo.gif"))); // NOI18N
         jPanelUp.add(btn_employee_picture, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 80, 65));
 
         btn_logout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1299,7 +1306,7 @@ public class SystemView extends javax.swing.JFrame {
                 .addGroup(jPanel_categoriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_category_register, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_category_update, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_category_delete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_category_delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel_categoriesLayout.setVerticalGroup(
@@ -1331,6 +1338,8 @@ public class SystemView extends javax.swing.JFrame {
         Categories.add(jLabelCategorySearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, -1, -1));
         Categories.add(txt_category_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, 160, 20));
 
+        categories_table.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.disabledBorderColor"));
+        categories_table.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.UIManager.getDefaults().getColor("Button.borderColor"), javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
         categories_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1347,6 +1356,7 @@ public class SystemView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        categories_table.setShowGrid(false);
         jScrollPaneCategories.setViewportView(categories_table);
 
         Categories.add(jScrollPaneCategories, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, 490, 240));
@@ -1687,7 +1697,7 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JPanel jPanelSuppliers;
     private javax.swing.JPanel jPanelUp;
     private javax.swing.JPanel jPanel_Profile;
-    private javax.swing.JPanel jPanel_categories;
+    public javax.swing.JPanel jPanel_categories;
     private javax.swing.JPanel jPanel_customers;
     private javax.swing.JPanel jPanel_employees;
     private javax.swing.JPanel jPanel_products;
@@ -1710,7 +1720,7 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JTable suppliers_table;
     public javax.swing.JTextField txt_category_id;
     public javax.swing.JTextField txt_category_name;
-    private javax.swing.JTextField txt_category_search;
+    public javax.swing.JTextField txt_category_search;
     public javax.swing.JTextField txt_customer_address;
     public javax.swing.JTextField txt_customer_email;
     public javax.swing.JTextField txt_customer_id;
