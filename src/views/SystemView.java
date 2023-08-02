@@ -2,6 +2,7 @@ package views;
 import controllers.CategoriesController;
 import controllers.CustomersController;
 import controllers.EmployeesController;
+import controllers.ProductsController;
 import controllers.SettingsController;
 import controllers.SuppliersController;
 import models.Customers;
@@ -15,17 +16,21 @@ import models.SuppliersDao;
 import static models.EmployeesDao.full_name_user;
 import static models.EmployeesDao.id_user;
 import static models.EmployeesDao.rol_user;
+import models.Products;
+import models.ProductsDao;
 
 public class SystemView extends javax.swing.JFrame {
     
     Employees employee = new Employees();
-    EmployeesDao employeesDao = new EmployeesDao();
+    EmployeesDao employeeDao = new EmployeesDao();
     Customers customer = new Customers();
     CustomersDao customerDao = new CustomersDao();
     Suppliers supplier = new Suppliers();
     SuppliersDao supplierDao = new SuppliersDao();
     Categories category = new Categories();
-    CategoriesDao categoriesDao = new CategoriesDao();
+    CategoriesDao categoryDao = new CategoriesDao();
+    Products product = new Products();
+    ProductsDao productDao = new ProductsDao();
     
     public SystemView() {
         initComponents();
@@ -37,7 +42,7 @@ public class SystemView extends javax.swing.JFrame {
         SettingsController setting = new SettingsController(this);
         
         //Employee controller
-        EmployeesController employee_user = new EmployeesController(employee,employeesDao,this);
+        EmployeesController employee_user = new EmployeesController(employee,employeeDao,this);
         employee_user.listAllEmployees();
         employee_user.cleanFields();
         
@@ -49,9 +54,13 @@ public class SystemView extends javax.swing.JFrame {
         supplier_info.listAllSuppliers();
         supplier_info.cleanFields();
         
-        CategoriesController category_section = new CategoriesController(category,categoriesDao,this);
+        CategoriesController category_section = new CategoriesController(category,categoryDao,this);
         category_section.listAllCategories();
         category_section.cleanFields();
+        
+        ProductsController product_section = new ProductsController(product,productDao,this);
+        product_section.listAllProducts();
+        product_section.cleanFields();
         
         this.repaint();
     }
@@ -1700,7 +1709,7 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JPanel jPanel_categories;
     private javax.swing.JPanel jPanel_customers;
     private javax.swing.JPanel jPanel_employees;
-    private javax.swing.JPanel jPanel_products;
+    public javax.swing.JPanel jPanel_products;
     private javax.swing.JPanel jPanel_purchases;
     private javax.swing.JPanel jPanel_suppliers;
     private javax.swing.JScrollPane jScrollPaneCategories;
