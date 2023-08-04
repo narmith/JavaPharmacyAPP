@@ -46,6 +46,7 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
         if(e.getSource() == views.btn_category_register) {
             if(views.txt_category_name.getText().equals("")){
                 JOptionPane.showMessageDialog(null, "Must fill the name field.");
+                views.txt_category_name.requestFocus();
             }
             else {
                 category.setName(views.txt_category_name.getText().trim());
@@ -65,6 +66,7 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
             } else {
                 if (views.txt_category_name.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Must fill the name field.");
+                    views.txt_category_name.requestFocus();
                 } else {
                     category.setId(Integer.parseInt(views.txt_category_id.getText().trim()));
                     category.setName(views.txt_category_name.getText().trim());
@@ -95,7 +97,7 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
     }
     
     public void listAllCategories() {
-        if (rol.equals("Administrador")) {
+        if (rol.equals("Administrator")) {
             cleanTable();
             List<Categories> list = categoriesDao.listCategoriesQuery(views.txt_category_search.getText());
             tableModel = (DefaultTableModel) views.categories_table.getModel();
@@ -119,11 +121,7 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
     public void cleanFields(){
         views.txt_category_id.setText("");
         views.txt_category_name.setText("");
-        
-        //views.txt_category_id.setEditable(true);
         views.txt_category_name.setEditable(true);
-        
-        //views.txt_category_id.setEnabled(true);
         views.btn_category_register.setEnabled(true);
     }
 
@@ -140,7 +138,7 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
             views.txt_category_id.setEditable(false);
             views.btn_category_register.setEnabled(false);
         } else if (e.getSource() == views.jLabelCategories) {
-            if (rol.equals("Administrador")) {
+            if (rol.equals("Administrator")) {
                 views.jTabbedPaneMain.setSelectedIndex(5);
                 cleanFields();
                 listAllCategories();

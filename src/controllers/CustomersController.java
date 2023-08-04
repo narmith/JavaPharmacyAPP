@@ -55,7 +55,6 @@ public class CustomersController implements ActionListener, MouseListener, KeyLi
                 if(customerDao.registerCustomerQuery(customer)){
                     cleanFields();
                     listAllCustomers();
-                    //JOptionPane.showMessageDialog(null, "Customer inserted into DB.");
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Error inserting customer into DB.");
@@ -85,7 +84,6 @@ public class CustomersController implements ActionListener, MouseListener, KeyLi
                         cleanFields();
                         listAllCustomers();
                         views.btn_customer_register.setEnabled(true);
-                        //JOptionPane.showMessageDialog(null, "Customer updated correctly.");
                     }
                     else {
                         JOptionPane.showMessageDialog(null, "Error while updating customer data to DB.");
@@ -108,7 +106,6 @@ public class CustomersController implements ActionListener, MouseListener, KeyLi
                     cleanFields();
                     listAllCustomers();
                     views.btn_customer_register.setEnabled(true);
-                    //JOptionPane.showMessageDialog(null, "Customer deleted.");
                 }
             }
         }

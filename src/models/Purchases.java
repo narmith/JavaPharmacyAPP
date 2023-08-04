@@ -1,7 +1,6 @@
 package models;
 
 public class Purchases {
-
     private int id;
     private int code;
     private String product_name;

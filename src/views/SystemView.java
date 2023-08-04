@@ -3,6 +3,7 @@ import controllers.CategoriesController;
 import controllers.CustomersController;
 import controllers.EmployeesController;
 import controllers.ProductsController;
+import controllers.PurchasesController;
 import controllers.SettingsController;
 import controllers.SuppliersController;
 import models.Customers;
@@ -18,6 +19,8 @@ import static models.EmployeesDao.id_user;
 import static models.EmployeesDao.rol_user;
 import models.Products;
 import models.ProductsDao;
+import models.Purchases;
+import models.PurchasesDao;
 
 public class SystemView extends javax.swing.JFrame {
     
@@ -31,6 +34,8 @@ public class SystemView extends javax.swing.JFrame {
     CategoriesDao categoryDao = new CategoriesDao();
     Products product = new Products();
     ProductsDao productDao = new ProductsDao();
+    Purchases purchase = new Purchases();
+    PurchasesDao purchaseDao = new PurchasesDao();
     
     public SystemView() {
         initComponents();
@@ -61,6 +66,8 @@ public class SystemView extends javax.swing.JFrame {
         ProductsController product_section = new ProductsController(product,productDao,this);
         product_section.listAllProducts();
         product_section.cleanFields();
+        
+        PurchasesController purchase_section = new PurchasesController(purchase,purchaseDao,this);
         
         this.repaint();
     }
@@ -141,8 +148,8 @@ public class SystemView extends javax.swing.JFrame {
         jLabelPurchaseSubtotal = new javax.swing.JLabel();
         jLabelPurchaseId = new javax.swing.JLabel();
         jLabelPurchaseTotalcost = new javax.swing.JLabel();
-        txt_purchase_code = new javax.swing.JTextField();
-        txt_purchase_name = new javax.swing.JTextField();
+        txt_purchase_prod_code = new javax.swing.JTextField();
+        txt_purchase_prod_name = new javax.swing.JTextField();
         txt_purchase_amount = new javax.swing.JTextField();
         cmb_purchase_supplier = new javax.swing.JComboBox<>();
         txt_purchase_price = new javax.swing.JTextField();
@@ -150,7 +157,7 @@ public class SystemView extends javax.swing.JFrame {
         txt_purchase_id = new javax.swing.JTextField();
         txt_purchase_totalcost = new javax.swing.JTextField();
         btn_purchase_add = new javax.swing.JButton();
-        btn_purchase_confirm = new javax.swing.JButton();
+        btn_purchase_buy = new javax.swing.JButton();
         btn_purchase_remove = new javax.swing.JButton();
         btn_purchase_new = new javax.swing.JButton();
         jScrollPanePurchases = new javax.swing.JScrollPane();
@@ -651,7 +658,7 @@ public class SystemView extends javax.swing.JFrame {
         jLabelPurchaseAmount.setText("Amount:");
 
         jLabelPurchaseProvider.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabelPurchaseProvider.setText("Provider:");
+        jLabelPurchaseProvider.setText("Supplier:");
 
         jLabelPurchasePrice.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelPurchasePrice.setText("Price:");
@@ -665,10 +672,10 @@ public class SystemView extends javax.swing.JFrame {
         jLabelPurchaseTotalcost.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelPurchaseTotalcost.setText("Total Cost:");
 
-        txt_purchase_code.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txt_purchase_prod_code.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txt_purchase_name.setEditable(false);
-        txt_purchase_name.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txt_purchase_prod_name.setEditable(false);
+        txt_purchase_prod_name.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         txt_purchase_amount.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -689,8 +696,8 @@ public class SystemView extends javax.swing.JFrame {
         btn_purchase_add.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_purchase_add.setText("Add");
 
-        btn_purchase_confirm.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn_purchase_confirm.setText("Buy");
+        btn_purchase_buy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_purchase_buy.setText("Buy");
 
         btn_purchase_remove.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_purchase_remove.setText("Remove");
@@ -711,8 +718,8 @@ public class SystemView extends javax.swing.JFrame {
                     .addComponent(jLabelPurchaseAmount, javax.swing.GroupLayout.Alignment.LEADING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_purchasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_purchase_code, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_purchase_name, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_purchase_prod_code, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_purchase_prod_name, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_purchase_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmb_purchase_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(126, 126, 126)
@@ -730,7 +737,7 @@ public class SystemView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                 .addGroup(jPanel_purchasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btn_purchase_add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_purchase_confirm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_purchase_buy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_purchase_remove, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_purchase_new, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(100, 100, 100))
@@ -743,7 +750,7 @@ public class SystemView extends javax.swing.JFrame {
                     .addComponent(jLabelPurchasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_purchase_price, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_purchase_add)
-                    .addComponent(txt_purchase_code, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_purchase_prod_code, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelPurchaseCode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel_purchasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_purchasesLayout.createSequentialGroup()
@@ -751,7 +758,7 @@ public class SystemView extends javax.swing.JFrame {
                         .addGroup(jPanel_purchasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelPurchaseSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_purchase_subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_purchase_name, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_purchase_prod_name, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelPurchaseName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20)
                         .addGroup(jPanel_purchasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -761,7 +768,7 @@ public class SystemView extends javax.swing.JFrame {
                             .addComponent(txt_purchase_amount, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)))
                     .addGroup(jPanel_purchasesLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_purchase_confirm)
+                        .addComponent(btn_purchase_buy)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_purchase_remove)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -783,7 +790,7 @@ public class SystemView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Name", "Amount", "Price", "Subtotal", "Provider"
+                "ID", "Name", "Amount", "Price", "Subtotal", "Supplier"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -986,7 +993,7 @@ public class SystemView extends javax.swing.JFrame {
         txt_employee_username.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         cmb_employee_rol.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmb_employee_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Administrador" }));
+        cmb_employee_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Administrator" }));
 
         txt_employee_address.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -1153,7 +1160,7 @@ public class SystemView extends javax.swing.JFrame {
         txt_supplier_address.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         cmb_supplier_city.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmb_supplier_city.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Capital Federal", "La plata", "Cordoba", "Tierra del fuego", "Medoza", "Resistencia", "Tucumán", "San Luis", "Santa rosa", "La rioja", "Rosario", "Corrientes" }));
+        cmb_supplier_city.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Capital Federal", "La Plata", "Cordoba", "Tierra del fuego", "Medoza", "Resistencia", "Tucumán", "San Luis", "Santa rosa", "La rioja", "Rosario", "Corrientes" }));
 
         txt_supplier_description.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -1385,7 +1392,7 @@ public class SystemView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Receipt", "Provider", "Total", "Date"
+                "Receipt", "Supplier", "Total", "Date"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1621,7 +1628,7 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JButton btn_product_update;
     public javax.swing.JButton btn_profile_update;
     public javax.swing.JButton btn_purchase_add;
-    public javax.swing.JButton btn_purchase_confirm;
+    public javax.swing.JButton btn_purchase_buy;
     public javax.swing.JButton btn_purchase_new;
     public javax.swing.JButton btn_purchase_remove;
     public javax.swing.JButton btn_supplier_cancel;
@@ -1631,7 +1638,7 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JTable categories_table;
     public javax.swing.JComboBox<String> cmb_employee_rol;
     public javax.swing.JComboBox<Object> cmb_product_category;
-    public javax.swing.JComboBox<String> cmb_purchase_supplier;
+    public javax.swing.JComboBox<Object> cmb_purchase_supplier;
     public javax.swing.JComboBox<String> cmb_supplier_city;
     public javax.swing.JTable customers_table;
     public javax.swing.JTable employees_table;
@@ -1710,7 +1717,7 @@ public class SystemView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_customers;
     private javax.swing.JPanel jPanel_employees;
     public javax.swing.JPanel jPanel_products;
-    private javax.swing.JPanel jPanel_purchases;
+    public javax.swing.JPanel jPanel_purchases;
     private javax.swing.JPanel jPanel_suppliers;
     private javax.swing.JScrollPane jScrollPaneCategories;
     private javax.swing.JScrollPane jScrollPaneCustomers;
@@ -1724,7 +1731,7 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JLabel label_employee_name;
     public javax.swing.JLabel label_employee_rol;
     public javax.swing.JTable products_table;
-    private javax.swing.JTable purchases_table;
+    public javax.swing.JTable purchases_table;
     public javax.swing.JTable reports_table;
     public javax.swing.JTable suppliers_table;
     public javax.swing.JTextField txt_category_id;
@@ -1758,10 +1765,10 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JPasswordField txt_profile_password_confirm;
     public javax.swing.JTextField txt_profile_telephone;
     public javax.swing.JTextField txt_purchase_amount;
-    public javax.swing.JTextField txt_purchase_code;
     public javax.swing.JTextField txt_purchase_id;
-    public javax.swing.JTextField txt_purchase_name;
     public javax.swing.JTextField txt_purchase_price;
+    public javax.swing.JTextField txt_purchase_prod_code;
+    public javax.swing.JTextField txt_purchase_prod_name;
     public javax.swing.JTextField txt_purchase_subtotal;
     public javax.swing.JTextField txt_purchase_totalcost;
     public javax.swing.JTextField txt_supplier_address;

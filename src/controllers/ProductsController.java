@@ -38,8 +38,6 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
         views.jPanel_products.addMouseListener(this);
         
         views.txt_product_search.addKeyListener(this);
-        
-        
     }
     
     @Override public void actionPerformed(ActionEvent e) {
@@ -74,10 +72,11 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
                     || views.txt_product_description.getText().equals("")
                     || views.txt_product_price.getText().equals("")
                     || views.cmb_product_category.getSelectedItem().toString().equals("")) {
-                JOptionPane.showMessageDialog(null, "Must fill all field.");
+                JOptionPane.showMessageDialog(null, "Must fill all fields.");
             } else {
                 if (views.txt_product_name.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Must fill the name field.");
+                    views.txt_product_name.requestFocus();
                 } else {
                     product.setId(Integer.parseInt(views.txt_product_id.getText()));
                     product.setCode(Integer.parseInt(views.txt_product_code.getText()));
@@ -116,7 +115,7 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
     }
     
     public void listAllProducts() {
-        if (rol.equals("Administrador") || rol.equals("User")) {
+        if (rol.equals("Administrator") || rol.equals("User")) {
             cleanTable();
             List<Products> list = productDao.listProductsQuery(views.txt_product_search.getText());
             tableModel = (DefaultTableModel) views.products_table.getModel();
@@ -149,7 +148,7 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
         views.txt_product_description.setText("");
         views.txt_product_id.setText("");
         
-        if (rol.equals("Administrador")) {
+        if (rol.equals("Administrator")) {
             views.btn_product_register.setEnabled(true);
             views.btn_product_update.setEnabled(true);
             views.btn_product_delete.setEnabled(true);
@@ -185,7 +184,7 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
             views.txt_product_id.setEditable(false);
             views.btn_product_register.setEnabled(false);
         } else if (e.getSource() == views.jLabelProducts) {
-            if (rol.equals("Administrador") || rol.equals("User")) {
+            if (rol.equals("Administrator") || rol.equals("User")) {
                 views.jTabbedPaneMain.setSelectedIndex(0);
                 cleanFields();
                 listAllProducts();

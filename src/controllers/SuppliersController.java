@@ -8,10 +8,12 @@ import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.DynamicCombobox;
 import models.Suppliers;
 import models.SuppliersDao;
 import views.SystemView;
 import static models.EmployeesDao.rol_user;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class SuppliersController implements ActionListener, MouseListener, KeyListener {
     private Suppliers supplier;
@@ -25,6 +27,8 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
         suppliersDao = newSupplierDao;
         views = newViews;
         
+        views.txt_supplier_search.addKeyListener(this);
+        
         views.btn_supplier_register.addActionListener(this);
         views.btn_supplier_update.addActionListener(this);
         views.btn_supplier_delete.addActionListener(this);
@@ -33,9 +37,9 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
         views.suppliers_table.addMouseListener(this);
         views.jLabelSuppliers.addMouseListener(this);
         
-        views.txt_supplier_search.addKeyListener(this);
+        getSuppliersName();
+        AutoCompleteDecorator.decorate(views.cmb_purchase_supplier);
     }
-
     @Override public void actionPerformed(ActionEvent e) {
         if(e.getSource() == views.btn_supplier_register) {
             if(views.txt_supplier_name.getText().equals("")
@@ -57,7 +61,6 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
                 if(suppliersDao.registerSupplierQuery(supplier)){
                     cleanFields();
                     listAllSuppliers();
-                    //JOptionPane.showMessageDialog(null, "Supplier inserted into DB.");
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Error inserting supplier into DB.");
@@ -86,7 +89,6 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
                         cleanFields();
                         listAllSuppliers();
                         views.btn_supplier_register.setEnabled(true);
-                        //JOptionPane.showMessageDialog(null, "Supplier updated correctly.");
                     } else {
                         JOptionPane.showMessageDialog(null, "Error while updating suppliers data to DB.");
                     }
@@ -96,7 +98,7 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
         else if(e.getSource()==views.btn_supplier_delete){
             int row = views.suppliers_table.getSelectedRow();
             if(row == -1){
-                JOptionPane.showMessageDialog(null, "Must select a suppliers first.");
+                JOptionPane.showMessageDialog(null, "Must select a supplier first.");
             }
             else {
                 int id = Integer.parseInt(views.suppliers_table.getValueAt(row, 0).toString());
@@ -105,7 +107,6 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
                     cleanFields();
                     listAllSuppliers();
                     views.btn_supplier_register.setEnabled(true);
-                    //JOptionPane.showMessageDialog(null, "Supplier deleted.");
                 }
             }
         }
@@ -116,7 +117,6 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
             views.txt_supplier_id.setEnabled(true);
         }
     }
-    
     public void listAllSuppliers() {
         cleanTable();
         
@@ -136,14 +136,12 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
         }
         views.suppliers_table.setModel(tableModel);
     }
-    
     public void cleanTable(){
         for(int i=0; i<tableModel.getRowCount();i++){
             tableModel.removeRow(i);
             i -= 1;
         }
     }
-    
     public void cleanFields(){
         views.txt_supplier_id.setText("");
         views.txt_supplier_id.setEditable(true);
@@ -154,7 +152,14 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
         views.txt_supplier_email.setText("");
         views.cmb_supplier_city.setSelectedIndex(0);
     }
-
+    public void getSuppliersName(){
+        List<Suppliers> list = suppliersDao.listSuppliersQuery(views.txt_supplier_search.getText());
+        for(int i=0; i<list.size();i++){
+            int id=list.get(i).getId();
+            String name = list.get(i).getName();
+            views.cmb_purchase_supplier.addItem(new DynamicCombobox(id, name));
+        }
+    }
     @Override public void mouseClicked(MouseEvent e) {
         if (e.getSource() == views.suppliers_table) {
             int row = views.suppliers_table.rowAtPoint(e.getPoint()); //Get the row where the mouse clicked.
@@ -171,7 +176,7 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
             views.txt_supplier_id.setEditable(false);
             views.btn_supplier_register.setEnabled(false);
         } else if (e.getSource() == views.jLabelSuppliers){
-            if(rol.equals("Administrador")){
+            if(rol.equals("Administrator")){
                 views.jTabbedPaneMain.setSelectedIndex(4);
                 cleanFields();
                 listAllSuppliers();
@@ -183,12 +188,10 @@ public class SuppliersController implements ActionListener, MouseListener, KeyLi
             }
         }
     }
-    
     @Override public void mousePressed(MouseEvent e) { }
     @Override public void mouseReleased(MouseEvent e) { }
     @Override public void mouseEntered(MouseEvent e) { }
     @Override public void mouseExited(MouseEvent e) { }
-
     @Override public void keyTyped(KeyEvent e) { }
     @Override public void keyPressed(KeyEvent e) { }
     @Override public void keyReleased(KeyEvent e) {

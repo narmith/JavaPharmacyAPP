@@ -63,7 +63,6 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
                 if(employeeDao.registerEmployeeQuery(employee)){
                     cleanFields();
                     listAllEmployees();
-                    //JOptionPane.showMessageDialog(null, "Employee inserted into DB.");
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Error inserting employee into DB.");
@@ -94,7 +93,6 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
                         cleanFields();
                         listAllEmployees();
                         views.btn_employee_register.setEnabled(true);
-                        //JOptionPane.showMessageDialog(null, "Employee updated correctly.");
                     }
                     else {
                         JOptionPane.showMessageDialog(null, "Error while updating employee data to DB.");
@@ -118,7 +116,6 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
                     views.btn_employee_register.setEnabled(true);
                     views.txt_employee_password.setEnabled(true);
                     listAllEmployees();
-                    //JOptionPane.showMessageDialog(null, "Employee deleted.");
                 }
             }
         }
@@ -141,7 +138,7 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
     }
     
     public void listAllEmployees(){
-        if(rol.equals("Administrador")){
+        if(rol.equals("Administrator")){
             cleanTable();
             
             List<Employees> list = employeeDao.listEmployeesQuery(views.txt_employee_search.getText());
@@ -200,7 +197,7 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
             views.btn_employee_register.setEnabled(false);
         }
         else if (e.getSource() == views.jLabelEmployees){
-            if(rol.equals("Administrador")){
+            if(rol.equals("Administrator")){
                 views.jTabbedPaneMain.setSelectedIndex(3);
                 cleanFields();
                 listAllEmployees();

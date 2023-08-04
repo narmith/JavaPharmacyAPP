@@ -1005,6 +1005,9 @@
                   </Border>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                   <AbsoluteConstraints x="10" y="10" width="970" height="270"/>
@@ -1024,8 +1027,8 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_purchase_code" min="-2" pref="165" max="-2" attributes="0"/>
-                              <Component id="txt_purchase_name" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Component id="txt_purchase_prod_code" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Component id="txt_purchase_prod_name" min="-2" pref="165" max="-2" attributes="0"/>
                               <Component id="txt_purchase_amount" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
                               <Component id="cmb_purchase_supplier" min="-2" pref="165" max="-2" attributes="0"/>
                           </Group>
@@ -1046,7 +1049,7 @@
                           <EmptySpace pref="93" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="btn_purchase_add" max="32767" attributes="0"/>
-                              <Component id="btn_purchase_confirm" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btn_purchase_buy" alignment="0" max="32767" attributes="0"/>
                               <Component id="btn_purchase_remove" alignment="0" max="32767" attributes="0"/>
                               <Component id="btn_purchase_new" alignment="1" max="32767" attributes="0"/>
                           </Group>
@@ -1062,7 +1065,7 @@
                               <Component id="jLabelPurchasePrice" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="txt_purchase_price" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="btn_purchase_add" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_purchase_code" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_purchase_prod_code" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabelPurchaseCode" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -1071,7 +1074,7 @@
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabelPurchaseSubtotal" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="txt_purchase_subtotal" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txt_purchase_name" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="txt_purchase_prod_name" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jLabelPurchaseName" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -1084,7 +1087,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btn_purchase_confirm" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btn_purchase_buy" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btn_purchase_remove" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -1135,7 +1138,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="14" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Provider:"/>
+                    <Property name="text" type="java.lang.String" value="Supplier:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabelPurchasePrice">
@@ -1170,7 +1173,7 @@
                     <Property name="text" type="java.lang.String" value="Total Cost:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_purchase_code">
+                <Component class="javax.swing.JTextField" name="txt_purchase_prod_code">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="14" style="0"/>
@@ -1180,7 +1183,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_purchase_name">
+                <Component class="javax.swing.JTextField" name="txt_purchase_prod_name">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1211,7 +1214,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
@@ -1270,7 +1273,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_purchase_confirm">
+                <Component class="javax.swing.JButton" name="btn_purchase_buy">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="14" style="1"/>
@@ -1326,7 +1329,7 @@
                         <Column editable="false" title="Amount" type="java.lang.Object"/>
                         <Column editable="false" title="Price" type="java.lang.Object"/>
                         <Column editable="true" title="Subtotal" type="java.lang.Object"/>
-                        <Column editable="false" title="Provider" type="java.lang.Object"/>
+                        <Column editable="false" title="Supplier" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -1367,6 +1370,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -1957,7 +1963,7 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="2">
                         <StringItem index="0" value="User"/>
-                        <StringItem index="1" value="Administrador"/>
+                        <StringItem index="1" value="Administrator"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -2390,7 +2396,7 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="12">
                         <StringItem index="0" value="Capital Federal"/>
-                        <StringItem index="1" value="La plata"/>
+                        <StringItem index="1" value="La Plata"/>
                         <StringItem index="2" value="Cordoba"/>
                         <StringItem index="3" value="Tierra del fuego"/>
                         <StringItem index="4" value="Medoza"/>
@@ -2861,7 +2867,7 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">
                         <Column editable="false" title="Receipt" type="java.lang.Object"/>
-                        <Column editable="false" title="Provider" type="java.lang.Object"/>
+                        <Column editable="false" title="Supplier" type="java.lang.Object"/>
                         <Column editable="false" title="Total" type="java.lang.Object"/>
                         <Column editable="false" title="Date" type="java.lang.Object"/>
                       </Table>

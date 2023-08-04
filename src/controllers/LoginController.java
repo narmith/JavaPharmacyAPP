@@ -21,6 +21,8 @@ public class LoginController implements ActionListener, KeyListener {
         login_view.btn_ok.addActionListener(this);
         login_view.txt_username.addKeyListener(this);
         login_view.txt_password.addKeyListener(this);
+        
+        login_view.txt_username.requestFocus();
     }
     
     private void tryToLogIn() {
@@ -31,7 +33,7 @@ public class LoginController implements ActionListener, KeyListener {
         if (!user.equals("") || !pass.equals("")) {
             employee = employees_dao.loginQuery(user, pass);
             if (employee.getUsername() != null) {
-                if (employee.getRol().equals("Administrador")) {
+                if (employee.getRol().equals("Administrator")) {
                     SystemView admin = new SystemView();
                     admin.setVisible(true);
                 } else {

@@ -8,6 +8,10 @@ public class DynamicCombobox {
         id = newId;
         name = newName;
     }
+    public DynamicCombobox(String newId, String newName) {
+        id = Integer.parseInt(newId);
+        name = newName;
+    }
 
     public int getId() { return id; }
     public void setId(int newId) { id = newId; }

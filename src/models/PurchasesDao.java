@@ -43,20 +43,17 @@ public class PurchasesDao {
     public boolean registerPurchaseDetailsQuery(int purchase_id, double purchase_price,
             int purchase_amount, double purchase_subtotal, int product_id){
         String register_purchase_query = "INSERT INTO purchase_details "
-                + "(purchase_id,purchase_price,purchase_amount,"
-                + "purchase_subtotal,product_date,product_id) "
-                + "VALUES (?,?,?,?,?,?)";
-        Timestamp datetime = new Timestamp(new Date().getTime());
+                + "(purchase_price,purchase_amount,purchase_subtotal,purchase_id,product_id) "
+                + "VALUES (?,?,?,?,?)";
         
         try{
             conn = cn.getConnection();
             pst = conn.prepareStatement(register_purchase_query);
-            pst.setInt(1,purchase_id);
-            pst.setDouble(2,purchase_price);
-            pst.setInt(3,purchase_amount);
-            pst.setDouble(4,purchase_subtotal);
-            pst.setTimestamp(5,datetime);
-            pst.setInt(6,product_id);            
+            pst.setDouble(1,purchase_price);
+            pst.setInt(2,purchase_amount);
+            pst.setDouble(3,purchase_subtotal);
+            pst.setInt(4,purchase_id);
+            pst.setInt(5,product_id);
             pst.execute();
             return true;
         }
@@ -66,31 +63,30 @@ public class PurchasesDao {
         }
     }
     
-    public int purchaseID(){
-        int id = 0;
-        String search_query = "SELECT MAX(id) AS id FROM purchases";
-        
+    public int purchaseId(){
+        String search_query = "SELECT MAX(id) AS purchase_id FROM purchases";
         try{
             conn = cn.getConnection();
             pst = conn.prepareStatement(search_query);
-            pst.executeQuery();
-            if(rs.next()){ id = rs.getInt("id"); }
+            rs = pst.executeQuery();
+            if(rs.next()){
+                return rs.getInt("purchase_id");
+            }
         }
         catch(SQLException e){
             System.err.println(e.getMessage());
         }
-        return id;
+        return 0;
     }
-    
     public List listAllPurchasesQuery(){
         List<Purchases> list_purchases = new ArrayList();
-        String query_search_all = "SELECT purchases.*, suppliers.* AS supplier_name "
+        String search_query = "SELECT purchases.*, suppliers.name AS supplier_name "
                 + "FROM purchases, suppliers "
                 + "WHERE purchases.supplier_id=suppliers.id "
                 + "ORDER BY purchases.id ASC";
         try{
             conn = cn.getConnection();
-            pst = conn.prepareStatement(query_search_all);
+            pst = conn.prepareStatement(search_query);
             rs = pst.executeQuery();
             
             while(rs.next()){
@@ -108,7 +104,6 @@ public class PurchasesDao {
         
         return list_purchases;
     }
-    
     public List listAllPurchaseDestailsQuery(int thisId){
         List<Purchases> list_purchases = new ArrayList();
         String query_search_all = "SELECT "

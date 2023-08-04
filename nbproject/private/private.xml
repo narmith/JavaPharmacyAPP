@@ -4,6 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Proyectos/Java/JavaPharmacyAPP/src/views/SystemView.java</file>
+            <file>file:/C:/Proyectos/Java/JavaPharmacyAPP/src/models/ProductsDao.java</file>
+            <file>file:/C:/Proyectos/Java/JavaPharmacyAPP/src/controllers/PurchasesController.java</file>
         </group>
     </open-files>
 </project-private>

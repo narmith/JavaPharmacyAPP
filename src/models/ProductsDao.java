@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+//DataAccessObject for Products
 public class ProductsDao {
     //connection instance
     ConnectionMySQL cn = new ConnectionMySQL(); //MySQL connection instance
@@ -16,7 +17,7 @@ public class ProductsDao {
     PreparedStatement pst;                      //query statement
     ResultSet rs;                               //query result
     
-    //methods
+    //Methods
     public boolean registerProductsQuery(Products product){
         String register_product_query = "INSERT INTO products "
                 + "(code,name,description,unit_price,created,updated,category_id) "
@@ -167,7 +168,7 @@ public class ProductsDao {
         return product;
     }
     public Products searchId(int id){
-        String query_search_product = "SELECT prod_qty FROM products WHERE id=?";
+        String query_search_product = "SELECT prod_qty,name FROM products WHERE id=?";
         Products product = new Products();
         
         try{
